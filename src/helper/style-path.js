@@ -386,6 +386,25 @@ const applyStrokeWidthToSelection = function (value, textEditTargetId) {
     return changed;
 };
 
+const applyIdToSelection = function (value, textEditTargetId) {
+    let changed = false;
+    const items = _getColorStateListeners(textEditTargetId);
+    for (let item of items) {
+        if (item.parent instanceof paper.CompoundPath) {
+            item = item.parent;
+        }
+        if (isGroup(item)) {
+            continue;
+        } else if (item.name !== value) {
+           
+            item.name = value;
+            changed = true;
+        }
+    }
+    return changed;
+};
+
+
 const _colorStateFromGradient = gradient => {
     const colorState = {};
     // Scratch only recognizes 2 color gradients
@@ -429,6 +448,7 @@ const getColorsFromSelection = function (selectedItems, bitmapMode) {
     let selectionStrokeColorString;
     let selectionStrokeColor2String;
     let selectionStrokeWidth;
+    let selectionName;
     let selectionThickness;
     let selectionFillGradientType;
     let selectionStrokeGradientType;
@@ -447,6 +467,10 @@ const getColorsFromSelection = function (selectedItems, bitmapMode) {
         let itemStrokeGradientType = GradientTypes.SOLID;
 
         if (!isGroup(item)) {
+            if (item.name){
+                selectionName = item.name || null;
+            }
+
             if (item.fillColor) {
                 // hack bc text items with null fill can't be detected by fill-hitTest anymore
                 if (isPointTextItem(item) && item.fillColor.alpha === 0) {
@@ -587,6 +611,7 @@ const getColorsFromSelection = function (selectedItems, bitmapMode) {
         strokeColor: selectionStrokeColorString ? selectionStrokeColorString : null,
         strokeColor2: selectionStrokeColor2String ? selectionStrokeColor2String : null,
         strokeGradientType: selectionStrokeGradientType,
+        name: selectionName || (selectionName === null) ? selectionName : null,
         strokeWidth: selectionStrokeWidth || (selectionStrokeWidth === null) ? selectionStrokeWidth : 0
     };
 };
@@ -629,16 +654,18 @@ const styleShape = function (path, options) {
                 gradientType,
                 path.bounds,
                 null, // radialCenter
+                options.name,
                 options.strokeWidth // minimum gradient size is stroke width
             );
         }
     }
-
+    if (options.hasOwnProperty('name')) path.name = options.name;
     if (options.hasOwnProperty('strokeWidth')) path.strokeWidth = options.strokeWidth;
 };
 
 export {
     applyColorToSelection,
+    applyIdToSelection,
     applyGradientTypeToSelection,
     applyStrokeWidthToSelection,
     createGradientObject,

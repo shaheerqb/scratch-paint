@@ -1,6 +1,6 @@
 import paper from '@scratch/paper';
 import classNames from 'classnames';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {injectIntl} from 'react-intl';
 import React from 'react';
 import PropTypes from 'prop-types';
 
@@ -32,28 +32,30 @@ import ReshapeMode from '../../containers/reshape-mode.jsx';
 import SelectMode from '../../containers/select-mode.jsx';
 import StrokeColorIndicatorComponent from '../../containers/stroke-color-indicator.jsx';
 import StrokeWidthIndicatorComponent from '../../containers/stroke-width-indicator.jsx';
+import IdProviderComponent from '../../containers/id-provider.jsx';
 import TextMode from '../../containers/text-mode.jsx';
 
 import Formats, {isBitmap, isVector} from '../../lib/format';
 import styles from './paint-editor.css';
 
-import bitmapIcon from './icons/bitmap.svg';
+// import bitmapIcon from './icons/bitmap.svg';
 import zoomInIcon from './icons/zoom-in.svg';
 import zoomOutIcon from './icons/zoom-out.svg';
 import zoomResetIcon from './icons/zoom-reset.svg';
+// import IdProviderComponent from '../id-provider.jsx';
 
-const messages = defineMessages({
-    bitmap: {
-        defaultMessage: 'Convert to Bitmap',
-        description: 'Label for button that converts the paint editor to bitmap mode',
-        id: 'paint.paintEditor.bitmap'
-    },
-    vector: {
-        defaultMessage: 'Convert to Vector',
-        description: 'Label for button that converts the paint editor to vector mode',
-        id: 'paint.paintEditor.vector'
-    }
-});
+// const messages = defineMessages({
+//     bitmap: {
+//         defaultMessage: 'Convert to Bitmap',
+//         description: 'Label for button that converts the paint editor to bitmap mode',
+//         id: 'paint.paintEditor.bitmap'
+//     },
+//     vector: {
+//         defaultMessage: 'Convert to Vector',
+//         description: 'Label for button that converts the paint editor to vector mode',
+//         id: 'paint.paintEditor.vector'
+//     }
+// });
 
 const PaintEditorComponent = props => (
     <div
@@ -97,6 +99,8 @@ const PaintEditorComponent = props => (
                             <StrokeWidthIndicatorComponent
                                 onUpdateImage={props.onUpdateImage}
                             />
+                            {/* Id for selected element*/}
+                            <IdProviderComponent onUpdateImage={props.onUpdateImage} />
                         </InputGroup>
                         <InputGroup className={styles.modModeTools}>
                             <ModeToolsContainer
@@ -230,7 +234,7 @@ const PaintEditorComponent = props => (
                     }
                 </ScrollableCanvas>
                 <div className={styles.canvasControls}>
-                    {isVector(props.format) ?
+                    {/* {isVector(props.format) ?
                         <Button
                             className={styles.bitmapButton}
                             onClick={props.onSwitchToBitmap}
@@ -258,7 +262,7 @@ const PaintEditorComponent = props => (
                                     {props.intl.formatMessage(messages.vector)}
                                 </span>
                             </Button> : null
-                    }
+                    } */}
                     {/* Zoom controls */}
                     <InputGroup className={styles.zoomControls}>
                         <ButtonGroup>
@@ -315,12 +319,12 @@ PaintEditorComponent.propTypes = {
     ]),
     imageFormat: PropTypes.string,
     imageId: PropTypes.string,
-    intl: intlShape,
+    // intl: intlShape,
     isEyeDropping: PropTypes.bool,
     name: PropTypes.string,
     onRedo: PropTypes.func.isRequired,
-    onSwitchToBitmap: PropTypes.func.isRequired,
-    onSwitchToVector: PropTypes.func.isRequired,
+    // onSwitchToBitmap: PropTypes.func.isRequired,
+    // onSwitchToVector: PropTypes.func.isRequired,
     onUndo: PropTypes.func.isRequired,
     onUpdateImage: PropTypes.func.isRequired,
     onUpdateName: PropTypes.func.isRequired,

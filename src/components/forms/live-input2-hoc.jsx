@@ -11,11 +11,7 @@ export default function (Input) {
     class LiveInput extends React.Component {
         constructor (props) {
             super(props);
-            bindAll(this, [
-                'handleChange',
-                'handleKeyPress',
-                'handleFlush'
-            ]);
+            bindAll(this, ['handleChange', 'handleKeyPress', 'handleFlush']);
             this.state = {
                 value: null
             };
@@ -30,24 +26,13 @@ export default function (Input) {
             this.setState({value: null});
         }
         handleChange (e) {
-            const isNumeric = this.props.type === 'number';
-            const validatesNumeric = isNumeric ? !isNaN(e.target.value) : true;
-            if (e.target.value !== null && validatesNumeric) {
-                let val = Number(e.target.value);
-                if (typeof this.props.max !== 'undefined' && val > Number(this.props.max)) {
-                    val = this.props.max;
-                }
-                if (typeof this.props.min !== 'undefined' && val < Number(this.props.min)) {
-                    val = this.props.min;
-                }
-                this.props.onSubmit(val);
-            } else if (this.props.type === 'text'){
-                this.props.onSubmit(e.target.value);
-            }
+            this.props.onSubmit(e.target.value);
+
             this.setState({value: e.target.value});
         }
         render () {
-            const liveValue = this.state.value === null ? this.props.value : this.state.value;
+            const liveValue =
+                this.state.value === null ? this.props.value : this.state.value;
             return (
                 <Input
                     {...this.props}
