@@ -306,8 +306,6 @@ class PaintEditor extends React.Component {
     render () {
         return (
             <PaintEditorComponent
-                canRedo
-                canUndo
                 canvas={this.state.canvas}
                 colorInfo={this.state.colorInfo}
                 format={this.props.format}
@@ -332,6 +330,8 @@ class PaintEditor extends React.Component {
                 onZoomIn={this.handleZoomIn}
                 onZoomOut={this.handleZoomOut}
                 onZoomReset={this.handleZoomReset}
+                canRedo
+                canUndo
             />
         );
     }
