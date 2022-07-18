@@ -306,8 +306,8 @@ class PaintEditor extends React.Component {
     render () {
         return (
             <PaintEditorComponent
-                canRedo={this.props.shouldShowRedo}
-                canUndo={this.props.shouldShowUndo}
+                canRedo
+                canUndo
                 canvas={this.state.canvas}
                 colorInfo={this.state.colorInfo}
                 format={this.props.format}
@@ -370,8 +370,6 @@ PaintEditor.propTypes = {
     rtl: PropTypes.bool,
     setLayout: PropTypes.func.isRequired,
     setSelectedItems: PropTypes.func.isRequired,
-    shouldShowRedo: PropTypes.func.isRequired,
-    shouldShowUndo: PropTypes.func.isRequired,
     updateViewBounds: PropTypes.func.isRequired,
     viewBounds: PropTypes.instanceOf(paper.Matrix).isRequired,
     zoomLevelId: PropTypes.string
